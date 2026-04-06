@@ -1,0 +1,106 @@
+{
+  "task": "muscle_gain",
+  "model": "qwen/qwen3.6-plus:free",
+  "score": 0.0,
+  "steps": 7,
+  "trajectory": [
+    {
+      "day": 1,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 50.5,
+      "strength": 50.3,
+      "fatigue": 0.0,
+      "status": "Day 1 (Week 1): Muscle 50.5 | Strength 50.3 | Fatigue 0.00"
+    },
+    {
+      "day": 2,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue 0.00 allows aggressive growth stimulus; balancing with high recovery prevents fatigue buildup and earns bonuses.",
+      "reward": 10.8,
+      "muscle_size": 51.48,
+      "strength": 50.89,
+      "fatigue": 0.0,
+      "status": "Day 2 (Week 1): Muscle 51.5 | Strength 50.9 | Fatigue 0.00"
+    },
+    {
+      "day": 3,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 51.98,
+      "strength": 51.19,
+      "fatigue": 0.0,
+      "status": "Day 3 (Week 1): Muscle 52.0 | Strength 51.2 | Fatigue 0.00"
+    },
+    {
+      "day": 4,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue 0.00 allows aggressive training for growth, balanced with high recovery to secure bonuses and prevent early fatigue.",
+      "reward": 13.8,
+      "muscle_size": 53.26,
+      "strength": 51.96,
+      "fatigue": 0.032,
+      "status": "Day 4 (Week 1): Muscle 53.3 | Strength 52.0 | Fatigue 0.03"
+    },
+    {
+      "day": 5,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 4.9949,
+      "muscle_size": 53.76,
+      "strength": 52.26,
+      "fatigue": 0.0,
+      "status": "Day 5 (Week 1): Muscle 53.8 | Strength 52.3 | Fatigue 0.00"
+    },
+    {
+      "day": 6,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 8
+      },
+      "thought": "Zero fatigue allows hard training; high recovery balances growth and prevents overtraining.",
+      "reward": 13.8,
+      "muscle_size": 55.04,
+      "strength": 53.02,
+      "fatigue": 0.032,
+      "status": "Day 6 (Week 1): Muscle 55.0 | Strength 53.0 | Fatigue 0.03"
+    },
+    {
+      "day": 7,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 9
+      },
+      "thought": "Fatigue is 0.03; I'll push intensity for growth while keeping recovery high, balancing the tradeoff to avoid penalties.",
+      "reward": 13.7869,
+      "muscle_size": 56.32,
+      "strength": 53.79,
+      "fatigue": 0.004,
+      "status": "Day 7 (Week 1): Muscle 56.3 | Strength 53.8 | Fatigue 0.00"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 
-"""Hypertrophy Env Environment Client."""
+"""Hypertrophy Environment Client."""
 
 from typing import Dict
 
@@ -12,34 +12,35 @@ from openenv.core import EnvClient
 from openenv.core.client_types import StepResult
 from openenv.core.env_server.types import State
 
-from .models import HypertrophyAction, HypertrophyObservation
+try:
+    from .models import HypertrophyAction, HypertrophyObservation
+except ImportError:
+    from models import HypertrophyAction, HypertrophyObservation
 
 
 class HypertrophyEnv(
     EnvClient[HypertrophyAction, HypertrophyObservation, State]
 ):
     """
-    Client for the Hypertrophy Env Environment.
+    Client for the Hypertrophy Training Environment.
 
     This client maintains a persistent WebSocket connection to the environment server,
     enabling efficient multi-step interactions with lower latency.
     Each client instance has its own dedicated environment session on the server.
 
     Example:
-        >>> # Connect to a running server
         >>> with HypertrophyEnv(base_url="http://localhost:8000") as client:
         ...     result = client.reset()
-        ...     print(result.observation.echoed_message)
+        ...     print(result.observation.muscle_size)  # 50.0
         ...
-        ...     result = client.step(HypertrophyAction(message="Hello!"))
-        ...     print(result.observation.echoed_message)
+        ...     result = client.step(HypertrophyAction(intensity=7, volume=6, recovery_strategy=8))
+        ...     print(result.observation.muscle_size)  # ~50.84
 
     Example with Docker:
-        >>> # Automatically start container and connect
-        >>> client = HypertrophyEnv.from_docker_image("hypertrophy_env-env:latest")
+        >>> client = HypertrophyEnv.from_docker_image("hypertrophy_env:latest")
         >>> try:
         ...     result = client.reset()
-        ...     result = client.step(HypertrophyAction(message="Test"))
+        ...     result = client.step(HypertrophyAction(intensity=5, volume=5, recovery_strategy=7))
         ... finally:
         ...     client.close()
     """
@@ -55,7 +56,9 @@ class HypertrophyEnv(
             Dictionary representation suitable for JSON encoding
         """
         return {
-            "message": action.message,
+            "intensity": action.intensity,
+            "volume": action.volume,
+            "recovery_strategy": action.recovery_strategy,
         }
 
     def _parse_result(self, payload: Dict) -> StepResult[HypertrophyObservation]:
@@ -70,10 +73,13 @@ class HypertrophyEnv(
         """
         obs_data = payload.get("observation", {})
         observation = HypertrophyObservation(
-            echoed_message=obs_data.get("echoed_message", ""),
-            message_length=obs_data.get("message_length", 0),
+            day=obs_data.get("day", 0),
+            muscle_size=obs_data.get("muscle_size", 50.0),
+            strength=obs_data.get("strength", 50.0),
+            fatigue=obs_data.get("fatigue", 0.0),
+            status_message=obs_data.get("status_message", ""),
             done=payload.get("done", False),
-            reward=payload.get("reward"),
+            reward=payload.get("reward", 0.0),
             metadata=obs_data.get("metadata", {}),
         )
 

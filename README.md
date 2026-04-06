@@ -1,6 +1,6 @@
 ---
-title: Hypertrophy Env Environment Server
-emoji: 📷
+title: Hypertrophy Environment Server
+emoji: 💪
 colorFrom: blue
 colorTo: blue
 sdk: docker
@@ -11,225 +11,171 @@ tags:
   - openenv
 ---
 
-# Hypertrophy Env Environment
+# Hypertrophy Environment
 
-A simple test environment that echoes back messages. Perfect for testing the env APIs as well as demonstrating environment usage patterns.
+A 12-week (84-day) hypertrophy simulator where an AI agent learns to maximize muscle growth by balancing training intensity, volume, and recovery while managing fatigue. Overtraining is penalized; smart periodization is rewarded.
 
 ## Quick Start
-
-The simplest way to use the Hypertrophy Env environment is through the `HypertrophyEnv` class:
 
 ```python
 from hypertrophy_env import HypertrophyAction, HypertrophyEnv
 
 try:
     # Create environment from Docker image
-    hypertrophy_envenv = HypertrophyEnv.from_docker_image("hypertrophy_env-env:latest")
+    env = HypertrophyEnv.from_docker_image("hypertrophy_env:latest")
 
-    # Reset
-    result = hypertrophy_envenv.reset()
-    print(f"Reset: {result.observation.echoed_message}")
+    # Reset to day 0
+    result = env.reset()
+    print(f"Day 0: muscle={result.observation.muscle_size}, fatigue={result.observation.fatigue}")
 
-    # Send multiple messages
-    messages = ["Hello, World!", "Testing echo", "Final message"]
+    # Train for 84 days
+    for day in range(1, 85):
+        result = env.step(HypertrophyAction(
+            intensity=7,
+            volume=6,
+            recovery_strategy=8,
+        ))
+        obs = result.observation
+        print(f"Day {obs.day}: muscle={obs.muscle_size:.1f} fatigue={obs.fatigue:.2f} reward={result.reward:.2f}")
 
-    for msg in messages:
-        result = hypertrophy_envenv.step(HypertrophyAction(message=msg))
-        print(f"Sent: '{msg}'")
-        print(f"  → Echoed: '{result.observation.echoed_message}'")
-        print(f"  → Length: {result.observation.message_length}")
-        print(f"  → Reward: {result.reward}")
+        if result.done:
+            print(f"Program complete! Final muscle: {obs.muscle_size:.1f}")
+            break
 
 finally:
-    # Always clean up
-    hypertrophy_envenv.close()
+    env.close()
 ```
-
-That's it! The `HypertrophyEnv.from_docker_image()` method handles:
-- Starting the Docker container
-- Waiting for the server to be ready
-- Connecting to the environment
-- Container cleanup when you call `close()`
 
 ## Building the Docker Image
 
-Before using the environment, you need to build the Docker image:
-
 ```bash
-# From project root
-docker build -t hypertrophy_env-env:latest -f server/Dockerfile .
+docker build -t hypertrophy_env:latest .
 ```
-
-## Deploying to Hugging Face Spaces
-
-You can easily deploy your OpenEnv environment to Hugging Face Spaces using the `openenv push` command:
-
-```bash
-# From the environment directory (where openenv.yaml is located)
-openenv push
-
-# Or specify options
-openenv push --namespace my-org --private
-```
-
-The `openenv push` command will:
-1. Validate that the directory is an OpenEnv environment (checks for `openenv.yaml`)
-2. Prepare a custom build for Hugging Face Docker space (enables web interface)
-3. Upload to Hugging Face (ensuring you're logged in)
-
-### Prerequisites
-
-- Authenticate with Hugging Face: The command will prompt for login if not already authenticated
-
-### Options
-
-- `--directory`, `-d`: Directory containing the OpenEnv environment (defaults to current directory)
-- `--repo-id`, `-r`: Repository ID in format 'username/repo-name' (defaults to 'username/env-name' from openenv.yaml)
-- `--base-image`, `-b`: Base Docker image to use (overrides Dockerfile FROM)
-- `--private`: Deploy the space as private (default: public)
-
-### Examples
-
-```bash
-# Push to your personal namespace (defaults to username/env-name from openenv.yaml)
-openenv push
-
-# Push to a specific repository
-openenv push --repo-id my-org/my-env
-
-# Push with a custom base image
-openenv push --base-image ghcr.io/meta-pytorch/openenv-base:latest
-
-# Push as a private space
-openenv push --private
-
-# Combine options
-openenv push --repo-id my-org/my-env --base-image custom-base:latest --private
-```
-
-After deployment, your space will be available at:
-`https://huggingface.co/spaces/<repo-id>`
-
-The deployed space includes:
-- **Web Interface** at `/web` - Interactive UI for exploring the environment
-- **API Documentation** at `/docs` - Full OpenAPI/Swagger interface
-- **Health Check** at `/health` - Container health monitoring
-- **WebSocket** at `/ws` - Persistent session endpoint for low-latency interactions
 
 ## Environment Details
 
 ### Action
-**HypertrophyAction**: Contains a single field
-- `message` (str) - The message to echo back
+
+**HypertrophyAction** — the agent's daily training decision:
+- `intensity` (int, 1-10) — Training intensity (1=light, 10=max effort)
+- `volume` (int, 1-10) — Training volume (1=minimal sets, 10=maximum volume)
+- `recovery_strategy` (int, 1-10) — Recovery effort (1=poor, 10=optimal protocol)
 
 ### Observation
-**HypertrophyObservation**: Contains the echo response and metadata
-- `echoed_message` (str) - The message echoed back
-- `message_length` (int) - Length of the message
-- `reward` (float) - Reward based on message length (length × 0.1)
-- `done` (bool) - Always False for echo environment
-- `metadata` (dict) - Additional info like step count
+
+**HypertrophyObservation** — state after each training day:
+- `day` (int) — Current training day (0-84)
+- `muscle_size` (float) — Muscle size score (50.0-100.0)
+- `strength` (float) — Strength score (50.0-100.0)
+- `fatigue` (float) — Fatigue level (0.0=fresh, 1.0=overtrained)
+- `status_message` (str) — Human-readable status
+- `reward` (float) — Step reward (inherited from base)
+- `done` (bool) — Whether episode is complete (inherited from base)
+- `metadata` (dict) — Additional metrics (week, effective_stimulus, avg_fatigue, overtrain_days)
 
 ### Reward
-The reward is calculated as: `message_length × 0.1`
-- "Hi" → reward: 0.2
-- "Hello, World!" → reward: 1.3
-- Empty message → reward: 0.0
+
+The reward is shaped to encourage sustainable training:
+- **Base reward**: `muscle_delta × 10.0` — proportional to actual muscle gained
+- **Fatigue penalty**: `-20.0 × max(0, fatigue - 0.8)²` — quadratic penalty for overtraining
+- **Recovery bonus**: `+1.0` if recovery ≥ 7 and fatigue < 0.3
+
+### Physics
+
+- **Fatigue reduces effectiveness**: `effective_stimulus = intensity × volume × (1 - fatigue²)`
+- **Fatigue accumulation**: `fatigue += intensity × volume × 0.008`
+- **Fatigue recovery**: `fatigue -= recovery_strategy × 0.06`
+- **Muscle growth**: `muscle_size += effective_stimulus × 0.02` (clamped to 100)
+- **Strength growth**: `strength += effective_stimulus × 0.012` (clamped to 100)
+
+### Tasks (3 variants with explicit difficulty)
+
+| Difficulty | Task | Description | Score Formula |
+|------------|------|-------------|---------------|
+| Easy | `muscle_gain` | Maximize final muscle size | `(muscle - 50) / 50` |
+| Medium | `fatigue_management` | Grow muscle while keeping fatigue low | `(1 - avg_fatigue) × muscle_score` |
+| Hard | `periodization` | Achieve gains with minimal overtraining | `muscle×0.6 + no_overtrain×0.4` |
+
+Select task via: `HYPERTROPHY_TASK=muscle_gain`
+
+### Reproducibility Notes
+
+- **Baseline reproducibility (strong)**: `evaluate_agent.py` is seeded (`EVAL_SEED`, default `42`) and supports deterministic baseline policies.
+- **LLM reproducibility (best effort)**: external APIs can still vary slightly. For stronger reproducibility in `inference.py`, use:
+    - `REPRODUCIBLE_MODE=1` (default) to force deterministic decoding settings
+    - `INFERENCE_SEED=42` for local deterministic behavior
+    - `TEMPERATURE=0.0` for low-variance generation
+- For a fair comparison, keep model, task, and env vars fixed across repeated runs and report mean/std over multiple episodes.
 
 ## Advanced Usage
 
 ### Connecting to an Existing Server
 
-If you already have a Hypertrophy Env environment server running, you can connect directly:
-
 ```python
-from hypertrophy_env import HypertrophyEnv
+from hypertrophy_env import HypertrophyAction, HypertrophyEnv
 
-# Connect to existing server
-hypertrophy_envenv = HypertrophyEnv(base_url="<ENV_HTTP_URL_HERE>")
-
-# Use as normal
-result = hypertrophy_envenv.reset()
-result = hypertrophy_envenv.step(HypertrophyAction(message="Hello!"))
+env = HypertrophyEnv(base_url="http://localhost:8000")
+result = env.reset()
+result = env.step(HypertrophyAction(intensity=5, volume=5, recovery_strategy=7))
 ```
-
-Note: When connecting to an existing server, `hypertrophy_envenv.close()` will NOT stop the server.
 
 ### Using the Context Manager
 
-The client supports context manager usage for automatic connection management:
-
 ```python
 from hypertrophy_env import HypertrophyAction, HypertrophyEnv
 
-# Connect with context manager (auto-connects and closes)
 with HypertrophyEnv(base_url="http://localhost:8000") as env:
     result = env.reset()
-    print(f"Reset: {result.observation.echoed_message}")
-    # Multiple steps with low latency
-    for msg in ["Hello", "World", "!"]:
-        result = env.step(HypertrophyAction(message=msg))
-        print(f"Echoed: {result.observation.echoed_message}")
+    for day in range(1, 85):
+        result = env.step(HypertrophyAction(intensity=6, volume=5, recovery_strategy=8))
+        if result.done:
+            break
 ```
 
-The client uses WebSocket connections for:
-- **Lower latency**: No HTTP connection overhead per request
-- **Persistent session**: Server maintains your environment state
-- **Efficient for episodes**: Better for many sequential steps
+## Deploying to Hugging Face Spaces
 
-### Concurrent WebSocket Sessions
-
-The server supports multiple concurrent WebSocket connections. To enable this,
-modify `server/app.py` to use factory mode:
-
-```python
-# In server/app.py - use factory mode for concurrent sessions
-app = create_app(
-    HypertrophyEnvironment,  # Pass class, not instance
-    HypertrophyAction,
-    HypertrophyObservation,
-    max_concurrent_envs=4,  # Allow 4 concurrent sessions
-)
-```
-
-Then multiple clients can connect simultaneously:
-
-```python
-from hypertrophy_env import HypertrophyAction, HypertrophyEnv
-from concurrent.futures import ThreadPoolExecutor
-
-def run_episode(client_id: int):
-    with HypertrophyEnv(base_url="http://localhost:8000") as env:
-        result = env.reset()
-        for i in range(10):
-            result = env.step(HypertrophyAction(message=f"Client {client_id}, step {i}"))
-        return client_id, result.observation.message_length
-
-# Run 4 episodes concurrently
-with ThreadPoolExecutor(max_workers=4) as executor:
-    results = list(executor.map(run_episode, range(4)))
+```bash
+openenv push
 ```
 
 ## Development & Testing
 
-### Direct Environment Testing
+## Proving Agent Adaptation
 
-Test the environment logic directly without starting the HTTP server:
+This project does not fine-tune model weights during rollout.
+Adaptation happens through in-context learning: recent trajectory, reward, and fatigue history are fed back into each next-day prompt.
+
+### 1) Run Baseline vs Agent Evaluation
 
 ```bash
-# From the server directory
+# Baselines only (random/fixed/heuristic)
+EVAL_EPISODES=20 ENABLE_LLM_EVAL=0 python evaluate_agent.py
+
+# Include LLM policy (requires API key/model access)
+EVAL_EPISODES=20 ENABLE_LLM_EVAL=1 python evaluate_agent.py
+```
+
+Artifacts generated in `artifacts/`:
+- `policy_summary.csv` - per-episode metrics for tables/charts
+- `trajectory_comparison.png` - dual-axis plot (muscle and fatigue) for baseline vs agent
+
+### 2) Capture LLM Reasoning Trace
+
+`inference.py` logs full day-by-day trajectory (state, action, reward, thought) to a JSON artifact file.
+
+```bash
+SAVE_TRAJECTORY=1 ARTIFACT_DIR=artifacts python inference.py
+```
+
+This provides judge-friendly evidence that the policy reacts to fatigue penalties and recovery opportunities across the 84-day horizon.
+
+### Direct Environment Testing
+
+```bash
 python3 server/hypertrophy_env_environment.py
 ```
 
-This verifies that:
-- Environment resets correctly
-- Step executes actions properly
-- State tracking works
-- Rewards are calculated correctly
-
 ### Running Locally
-
-Run the server locally for development:
 
 ```bash
 uvicorn server.app:app --reload
@@ -239,17 +185,18 @@ uvicorn server.app:app --reload
 
 ```
 hypertrophy_env/
-├── .dockerignore         # Docker build exclusions
+├── .dockerignore          # Docker build exclusions
 ├── __init__.py            # Module exports
 ├── README.md              # This file
 ├── openenv.yaml           # OpenEnv manifest
 ├── pyproject.toml         # Project metadata and dependencies
 ├── uv.lock                # Locked dependencies (generated)
-├── client.py              # HypertrophyEnv client
+├── client.py              # HypertrophyEnv client (WebSocket)
 ├── models.py              # Action and Observation models
+├── inference.py           # LLM agent inference script
+├── implementation_plan.md # Implementation plan and checklist
 └── server/
     ├── __init__.py        # Server module exports
-    ├── hypertrophy_env_environment.py  # Core environment logic
-    ├── app.py             # FastAPI application (HTTP + WebSocket endpoints)
-    └── Dockerfile         # Container image definition
+    ├── hypertrophy_env_environment.py  # Core MDP environment
+    └── app.py             # FastAPI application (HTTP + WebSocket)
 ```

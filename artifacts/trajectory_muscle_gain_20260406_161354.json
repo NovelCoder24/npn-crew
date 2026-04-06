@@ -1,0 +1,1184 @@
+{
+  "task": "muscle_gain",
+  "model": "Qwen/Qwen2.5-72B-Instruct:novita",
+  "score": 1.0,
+  "steps": 84,
+  "trajectory": [
+    {
+      "day": 1,
+      "action": {
+        "intensity": 6,
+        "volume": 6,
+        "recovery_strategy": 8
+      },
+      "thought": "Start with moderate intensity and volume to build base, focus on recovery.",
+      "reward": 8.2,
+      "muscle_size": 50.72,
+      "strength": 50.43,
+      "fatigue": 0.0,
+      "status": "Day 1 (Week 1): Muscle 50.7 | Strength 50.4 | Fatigue 0.00"
+    },
+    {
+      "day": 2,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 7
+      },
+      "thought": "Low fatigue, prioritize growth with moderate intensity and volume.",
+      "reward": 10.8,
+      "muscle_size": 51.7,
+      "strength": 51.02,
+      "fatigue": 0.0,
+      "status": "Day 2 (Week 1): Muscle 51.7 | Strength 51.0 | Fatigue 0.00"
+    },
+    {
+      "day": 3,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, prioritize growth with moderate recovery.",
+      "reward": 10.8,
+      "muscle_size": 52.68,
+      "strength": 51.61,
+      "fatigue": 0.0,
+      "status": "Day 3 (Week 1): Muscle 52.7 | Strength 51.6 | Fatigue 0.00"
+    },
+    {
+      "day": 4,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue is low, can push harder for growth.",
+      "reward": 13.8,
+      "muscle_size": 53.96,
+      "strength": 52.38,
+      "fatigue": 0.092,
+      "status": "Day 4 (Week 1): Muscle 54.0 | Strength 52.4 | Fatigue 0.09"
+    },
+    {
+      "day": 5,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, prioritize growth with moderate recovery.",
+      "reward": 13.6917,
+      "muscle_size": 55.23,
+      "strength": 53.14,
+      "fatigue": 0.184,
+      "status": "Day 5 (Week 1): Muscle 55.2 | Strength 53.1 | Fatigue 0.18"
+    },
+    {
+      "day": 6,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, can push harder but maintain good recovery.",
+      "reward": 13.3666,
+      "muscle_size": 56.47,
+      "strength": 53.88,
+      "fatigue": 0.276,
+      "status": "Day 6 (Week 1): Muscle 56.5 | Strength 53.9 | Fatigue 0.28"
+    },
+    {
+      "day": 7,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, prioritize growth with moderate recovery.",
+      "reward": 11.8249,
+      "muscle_size": 57.65,
+      "strength": 54.59,
+      "fatigue": 0.368,
+      "status": "Day 7 (Week 1): Muscle 57.6 | Strength 54.6 | Fatigue 0.37"
+    },
+    {
+      "day": 8,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue moderate, balance growth and recovery.",
+      "reward": 9.4728,
+      "muscle_size": 58.5,
+      "strength": 55.1,
+      "fatigue": 0.28,
+      "status": "Day 8 (Week 2): Muscle 58.5 | Strength 55.1 | Fatigue 0.28"
+    },
+    {
+      "day": 9,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue moderate, balance growth and recovery.",
+      "reward": 10.0317,
+      "muscle_size": 59.4,
+      "strength": 55.64,
+      "fatigue": 0.192,
+      "status": "Day 9 (Week 2): Muscle 59.4 | Strength 55.6 | Fatigue 0.19"
+    },
+    {
+      "day": 10,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, focus on growth with moderate recovery.",
+      "reward": 10.4387,
+      "muscle_size": 60.34,
+      "strength": 56.21,
+      "fatigue": 0.164,
+      "status": "Day 10 (Week 2): Muscle 60.3 | Strength 56.2 | Fatigue 0.16"
+    },
+    {
+      "day": 11,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, balance growth with moderate recovery.",
+      "reward": 10.5364,
+      "muscle_size": 61.3,
+      "strength": 56.78,
+      "fatigue": 0.136,
+      "status": "Day 11 (Week 2): Muscle 61.3 | Strength 56.8 | Fatigue 0.14"
+    },
+    {
+      "day": 12,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, can push harder while maintaining good recovery.",
+      "reward": 13.5633,
+      "muscle_size": 62.55,
+      "strength": 57.53,
+      "fatigue": 0.228,
+      "status": "Day 12 (Week 2): Muscle 62.6 | Strength 57.5 | Fatigue 0.23"
+    },
+    {
+      "day": 13,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, can push harder while maintaining good recovery.",
+      "reward": 12.1346,
+      "muscle_size": 63.77,
+      "strength": 58.26,
+      "fatigue": 0.32,
+      "status": "Day 13 (Week 2): Muscle 63.8 | Strength 58.3 | Fatigue 0.32"
+    },
+    {
+      "day": 14,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue moderate, balancing growth with recovery.",
+      "reward": 9.7965,
+      "muscle_size": 64.65,
+      "strength": 58.79,
+      "fatigue": 0.232,
+      "status": "Day 14 (Week 2): Muscle 64.6 | Strength 58.8 | Fatigue 0.23"
+    },
+    {
+      "day": 15,
+      "action": {
+        "intensity": 8,
+        "volume": 8,
+        "recovery_strategy": 7
+      },
+      "thought": "Fatigue low, can push harder while maintaining good recovery.",
+      "reward": 12.1111,
+      "muscle_size": 65.86,
+      "strength": 59.51,
+      "fatigue": 0.324,
+      "status": "Day 15 (Week 3): Muscle 65.9 | Strength 59.5 | Fatigue 0.32"
+    },
+    {
+      "day": 16,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue moderate, balance growth and recovery.",
+      "reward": 9.7712,
+      "muscle_size": 66.73,
+      "strength": 60.04,
+      "fatigue": 0.236,
+      "status": "Day 16 (Week 3): Muscle 66.7 | Strength 60.0 | Fatigue 0.24"
+    },
+    {
+      "day": 17,
+      "action": {
+        "intensity": 7,
+        "volume": 7,
+        "recovery_strategy": 8
+      },
+      "thought": "Fatigue moderate; balance growth with recovery.",
+      "reward": 10.2542,
+      "muscle_size": 67.66,
+      "strength": 60.6,
+      "fatigue": 0.148,
+      "status": "Day 17 (Week 3): Muscle 67.7 | Strength 60.6 | Fatigue 0.15"
+    },
+    {
+      "day": 18,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 4.8905,
+      "muscle_size": 68.15,
+      "strength": 60.89,
+      "fatigue": 0.048,
+      "status": "Day 18 (Week 3): Muscle 68.1 | Strength 60.9 | Fatigue 0.05"
+    },
+    {
+      "day": 19,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 4.9885,
+      "muscle_size": 68.65,
+      "strength": 61.19,
+      "fatigue": 0.0,
+      "status": "Day 19 (Week 3): Muscle 68.6 | Strength 61.2 | Fatigue 0.00"
+    },
+    {
+      "day": 20,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 69.15,
+      "strength": 61.49,
+      "fatigue": 0.0,
+      "status": "Day 20 (Week 3): Muscle 69.1 | Strength 61.5 | Fatigue 0.00"
+    },
+    {
+      "day": 21,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 69.65,
+      "strength": 61.79,
+      "fatigue": 0.0,
+      "status": "Day 21 (Week 3): Muscle 69.6 | Strength 61.8 | Fatigue 0.00"
+    },
+    {
+      "day": 22,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 70.15,
+      "strength": 62.09,
+      "fatigue": 0.0,
+      "status": "Day 22 (Week 4): Muscle 70.1 | Strength 62.1 | Fatigue 0.00"
+    },
+    {
+      "day": 23,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 70.65,
+      "strength": 62.39,
+      "fatigue": 0.0,
+      "status": "Day 23 (Week 4): Muscle 70.6 | Strength 62.4 | Fatigue 0.00"
+    },
+    {
+      "day": 24,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 71.15,
+      "strength": 62.69,
+      "fatigue": 0.0,
+      "status": "Day 24 (Week 4): Muscle 71.1 | Strength 62.7 | Fatigue 0.00"
+    },
+    {
+      "day": 25,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 71.65,
+      "strength": 62.99,
+      "fatigue": 0.0,
+      "status": "Day 25 (Week 4): Muscle 71.6 | Strength 63.0 | Fatigue 0.00"
+    },
+    {
+      "day": 26,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 72.15,
+      "strength": 63.29,
+      "fatigue": 0.0,
+      "status": "Day 26 (Week 4): Muscle 72.1 | Strength 63.3 | Fatigue 0.00"
+    },
+    {
+      "day": 27,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 72.65,
+      "strength": 63.59,
+      "fatigue": 0.0,
+      "status": "Day 27 (Week 4): Muscle 72.6 | Strength 63.6 | Fatigue 0.00"
+    },
+    {
+      "day": 28,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 73.15,
+      "strength": 63.89,
+      "fatigue": 0.0,
+      "status": "Day 28 (Week 4): Muscle 73.1 | Strength 63.9 | Fatigue 0.00"
+    },
+    {
+      "day": 29,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 73.65,
+      "strength": 64.19,
+      "fatigue": 0.0,
+      "status": "Day 29 (Week 5): Muscle 73.6 | Strength 64.2 | Fatigue 0.00"
+    },
+    {
+      "day": 30,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 74.15,
+      "strength": 64.49,
+      "fatigue": 0.0,
+      "status": "Day 30 (Week 5): Muscle 74.1 | Strength 64.5 | Fatigue 0.00"
+    },
+    {
+      "day": 31,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 74.65,
+      "strength": 64.79,
+      "fatigue": 0.0,
+      "status": "Day 31 (Week 5): Muscle 74.6 | Strength 64.8 | Fatigue 0.00"
+    },
+    {
+      "day": 32,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 75.15,
+      "strength": 65.09,
+      "fatigue": 0.0,
+      "status": "Day 32 (Week 5): Muscle 75.1 | Strength 65.1 | Fatigue 0.00"
+    },
+    {
+      "day": 33,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 75.65,
+      "strength": 65.39,
+      "fatigue": 0.0,
+      "status": "Day 33 (Week 5): Muscle 75.6 | Strength 65.4 | Fatigue 0.00"
+    },
+    {
+      "day": 34,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 76.15,
+      "strength": 65.69,
+      "fatigue": 0.0,
+      "status": "Day 34 (Week 5): Muscle 76.1 | Strength 65.7 | Fatigue 0.00"
+    },
+    {
+      "day": 35,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 76.65,
+      "strength": 65.99,
+      "fatigue": 0.0,
+      "status": "Day 35 (Week 5): Muscle 76.6 | Strength 66.0 | Fatigue 0.00"
+    },
+    {
+      "day": 36,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 77.15,
+      "strength": 66.29,
+      "fatigue": 0.0,
+      "status": "Day 36 (Week 6): Muscle 77.1 | Strength 66.3 | Fatigue 0.00"
+    },
+    {
+      "day": 37,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 77.65,
+      "strength": 66.59,
+      "fatigue": 0.0,
+      "status": "Day 37 (Week 6): Muscle 77.6 | Strength 66.6 | Fatigue 0.00"
+    },
+    {
+      "day": 38,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 78.15,
+      "strength": 66.89,
+      "fatigue": 0.0,
+      "status": "Day 38 (Week 6): Muscle 78.1 | Strength 66.9 | Fatigue 0.00"
+    },
+    {
+      "day": 39,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 78.65,
+      "strength": 67.19,
+      "fatigue": 0.0,
+      "status": "Day 39 (Week 6): Muscle 78.6 | Strength 67.2 | Fatigue 0.00"
+    },
+    {
+      "day": 40,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 79.15,
+      "strength": 67.49,
+      "fatigue": 0.0,
+      "status": "Day 40 (Week 6): Muscle 79.1 | Strength 67.5 | Fatigue 0.00"
+    },
+    {
+      "day": 41,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 79.65,
+      "strength": 67.79,
+      "fatigue": 0.0,
+      "status": "Day 41 (Week 6): Muscle 79.6 | Strength 67.8 | Fatigue 0.00"
+    },
+    {
+      "day": 42,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 80.15,
+      "strength": 68.09,
+      "fatigue": 0.0,
+      "status": "Day 42 (Week 6): Muscle 80.1 | Strength 68.1 | Fatigue 0.00"
+    },
+    {
+      "day": 43,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 80.65,
+      "strength": 68.39,
+      "fatigue": 0.0,
+      "status": "Day 43 (Week 7): Muscle 80.6 | Strength 68.4 | Fatigue 0.00"
+    },
+    {
+      "day": 44,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 81.15,
+      "strength": 68.69,
+      "fatigue": 0.0,
+      "status": "Day 44 (Week 7): Muscle 81.1 | Strength 68.7 | Fatigue 0.00"
+    },
+    {
+      "day": 45,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 81.65,
+      "strength": 68.99,
+      "fatigue": 0.0,
+      "status": "Day 45 (Week 7): Muscle 81.6 | Strength 69.0 | Fatigue 0.00"
+    },
+    {
+      "day": 46,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 82.15,
+      "strength": 69.29,
+      "fatigue": 0.0,
+      "status": "Day 46 (Week 7): Muscle 82.1 | Strength 69.3 | Fatigue 0.00"
+    },
+    {
+      "day": 47,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 82.65,
+      "strength": 69.59,
+      "fatigue": 0.0,
+      "status": "Day 47 (Week 7): Muscle 82.6 | Strength 69.6 | Fatigue 0.00"
+    },
+    {
+      "day": 48,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 83.15,
+      "strength": 69.89,
+      "fatigue": 0.0,
+      "status": "Day 48 (Week 7): Muscle 83.1 | Strength 69.9 | Fatigue 0.00"
+    },
+    {
+      "day": 49,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 83.65,
+      "strength": 70.19,
+      "fatigue": 0.0,
+      "status": "Day 49 (Week 7): Muscle 83.6 | Strength 70.2 | Fatigue 0.00"
+    },
+    {
+      "day": 50,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 84.15,
+      "strength": 70.49,
+      "fatigue": 0.0,
+      "status": "Day 50 (Week 8): Muscle 84.1 | Strength 70.5 | Fatigue 0.00"
+    },
+    {
+      "day": 51,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 84.65,
+      "strength": 70.79,
+      "fatigue": 0.0,
+      "status": "Day 51 (Week 8): Muscle 84.6 | Strength 70.8 | Fatigue 0.00"
+    },
+    {
+      "day": 52,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 85.15,
+      "strength": 71.09,
+      "fatigue": 0.0,
+      "status": "Day 52 (Week 8): Muscle 85.1 | Strength 71.1 | Fatigue 0.00"
+    },
+    {
+      "day": 53,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 85.65,
+      "strength": 71.39,
+      "fatigue": 0.0,
+      "status": "Day 53 (Week 8): Muscle 85.6 | Strength 71.4 | Fatigue 0.00"
+    },
+    {
+      "day": 54,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 86.15,
+      "strength": 71.69,
+      "fatigue": 0.0,
+      "status": "Day 54 (Week 8): Muscle 86.1 | Strength 71.7 | Fatigue 0.00"
+    },
+    {
+      "day": 55,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 86.65,
+      "strength": 71.99,
+      "fatigue": 0.0,
+      "status": "Day 55 (Week 8): Muscle 86.6 | Strength 72.0 | Fatigue 0.00"
+    },
+    {
+      "day": 56,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 87.15,
+      "strength": 72.29,
+      "fatigue": 0.0,
+      "status": "Day 56 (Week 8): Muscle 87.1 | Strength 72.3 | Fatigue 0.00"
+    },
+    {
+      "day": 57,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 87.65,
+      "strength": 72.59,
+      "fatigue": 0.0,
+      "status": "Day 57 (Week 9): Muscle 87.6 | Strength 72.6 | Fatigue 0.00"
+    },
+    {
+      "day": 58,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 88.15,
+      "strength": 72.89,
+      "fatigue": 0.0,
+      "status": "Day 58 (Week 9): Muscle 88.1 | Strength 72.9 | Fatigue 0.00"
+    },
+    {
+      "day": 59,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 88.65,
+      "strength": 73.19,
+      "fatigue": 0.0,
+      "status": "Day 59 (Week 9): Muscle 88.6 | Strength 73.2 | Fatigue 0.00"
+    },
+    {
+      "day": 60,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 89.15,
+      "strength": 73.49,
+      "fatigue": 0.0,
+      "status": "Day 60 (Week 9): Muscle 89.1 | Strength 73.5 | Fatigue 0.00"
+    },
+    {
+      "day": 61,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 89.65,
+      "strength": 73.79,
+      "fatigue": 0.0,
+      "status": "Day 61 (Week 9): Muscle 89.6 | Strength 73.8 | Fatigue 0.00"
+    },
+    {
+      "day": 62,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 90.15,
+      "strength": 74.09,
+      "fatigue": 0.0,
+      "status": "Day 62 (Week 9): Muscle 90.1 | Strength 74.1 | Fatigue 0.00"
+    },
+    {
+      "day": 63,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 90.65,
+      "strength": 74.39,
+      "fatigue": 0.0,
+      "status": "Day 63 (Week 9): Muscle 90.6 | Strength 74.4 | Fatigue 0.00"
+    },
+    {
+      "day": 64,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 91.15,
+      "strength": 74.69,
+      "fatigue": 0.0,
+      "status": "Day 64 (Week 10): Muscle 91.1 | Strength 74.7 | Fatigue 0.00"
+    },
+    {
+      "day": 65,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 91.65,
+      "strength": 74.99,
+      "fatigue": 0.0,
+      "status": "Day 65 (Week 10): Muscle 91.6 | Strength 75.0 | Fatigue 0.00"
+    },
+    {
+      "day": 66,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 92.15,
+      "strength": 75.29,
+      "fatigue": 0.0,
+      "status": "Day 66 (Week 10): Muscle 92.1 | Strength 75.3 | Fatigue 0.00"
+    },
+    {
+      "day": 67,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 92.65,
+      "strength": 75.59,
+      "fatigue": 0.0,
+      "status": "Day 67 (Week 10): Muscle 92.6 | Strength 75.6 | Fatigue 0.00"
+    },
+    {
+      "day": 68,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 93.15,
+      "strength": 75.89,
+      "fatigue": 0.0,
+      "status": "Day 68 (Week 10): Muscle 93.1 | Strength 75.9 | Fatigue 0.00"
+    },
+    {
+      "day": 69,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 93.65,
+      "strength": 76.19,
+      "fatigue": 0.0,
+      "status": "Day 69 (Week 10): Muscle 93.6 | Strength 76.2 | Fatigue 0.00"
+    },
+    {
+      "day": 70,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 94.15,
+      "strength": 76.49,
+      "fatigue": 0.0,
+      "status": "Day 70 (Week 10): Muscle 94.1 | Strength 76.5 | Fatigue 0.00"
+    },
+    {
+      "day": 71,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 94.65,
+      "strength": 76.79,
+      "fatigue": 0.0,
+      "status": "Day 71 (Week 11): Muscle 94.6 | Strength 76.8 | Fatigue 0.00"
+    },
+    {
+      "day": 72,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 95.15,
+      "strength": 77.09,
+      "fatigue": 0.0,
+      "status": "Day 72 (Week 11): Muscle 95.1 | Strength 77.1 | Fatigue 0.00"
+    },
+    {
+      "day": 73,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 95.65,
+      "strength": 77.39,
+      "fatigue": 0.0,
+      "status": "Day 73 (Week 11): Muscle 95.6 | Strength 77.4 | Fatigue 0.00"
+    },
+    {
+      "day": 74,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 96.15,
+      "strength": 77.69,
+      "fatigue": 0.0,
+      "status": "Day 74 (Week 11): Muscle 96.1 | Strength 77.7 | Fatigue 0.00"
+    },
+    {
+      "day": 75,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 96.65,
+      "strength": 77.99,
+      "fatigue": 0.0,
+      "status": "Day 75 (Week 11): Muscle 96.6 | Strength 78.0 | Fatigue 0.00"
+    },
+    {
+      "day": 76,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 97.15,
+      "strength": 78.29,
+      "fatigue": 0.0,
+      "status": "Day 76 (Week 11): Muscle 97.1 | Strength 78.3 | Fatigue 0.00"
+    },
+    {
+      "day": 77,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 97.65,
+      "strength": 78.59,
+      "fatigue": 0.0,
+      "status": "Day 77 (Week 11): Muscle 97.6 | Strength 78.6 | Fatigue 0.00"
+    },
+    {
+      "day": 78,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 98.15,
+      "strength": 78.89,
+      "fatigue": 0.0,
+      "status": "Day 78 (Week 12): Muscle 98.1 | Strength 78.9 | Fatigue 0.00"
+    },
+    {
+      "day": 79,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 98.65,
+      "strength": 79.19,
+      "fatigue": 0.0,
+      "status": "Day 79 (Week 12): Muscle 98.6 | Strength 79.2 | Fatigue 0.00"
+    },
+    {
+      "day": 80,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 99.15,
+      "strength": 79.49,
+      "fatigue": 0.0,
+      "status": "Day 80 (Week 12): Muscle 99.1 | Strength 79.5 | Fatigue 0.00"
+    },
+    {
+      "day": 81,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 5.0,
+      "muscle_size": 99.65,
+      "strength": 79.79,
+      "fatigue": 0.0,
+      "status": "Day 81 (Week 12): Muscle 99.6 | Strength 79.8 | Fatigue 0.00"
+    },
+    {
+      "day": 82,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 3.5273,
+      "muscle_size": 100.0,
+      "strength": 80.09,
+      "fatigue": 0.0,
+      "status": "Day 82 (Week 12): Muscle 100.0 | Strength 80.1 | Fatigue 0.00"
+    },
+    {
+      "day": 83,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 0.0,
+      "muscle_size": 100.0,
+      "strength": 80.39,
+      "fatigue": 0.0,
+      "status": "Day 83 (Week 12): Muscle 100.0 | Strength 80.4 | Fatigue 0.00"
+    },
+    {
+      "day": 84,
+      "action": {
+        "intensity": 5,
+        "volume": 5,
+        "recovery_strategy": 5
+      },
+      "thought": "",
+      "reward": 0.0,
+      "muscle_size": 100.0,
+      "strength": 80.69,
+      "fatigue": 0.0,
+      "status": "Program complete! Final muscle: 100.0, strength: 80.7"
+    }
+  ]
+}
