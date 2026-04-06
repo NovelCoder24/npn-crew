@@ -71,3 +71,6 @@ models.backup.py
 # FastAPI
 __pycache__/
 .fastapi_cache/
+
+# Artifacts: keep stable evidence files tracked, ignore run-by-run dumps
+artifacts/trajectory_*.json

@@ -11,192 +11,223 @@ tags:
   - openenv
 ---
 
-# Hypertrophy Environment
+# Hypertrophy Environment (Final Submission)
 
-A 12-week (84-day) hypertrophy simulator where an AI agent learns to maximize muscle growth by balancing training intensity, volume, and recovery while managing fatigue. Overtraining is penalized; smart periodization is rewarded.
+Real-world OpenEnv environment for a 12-week (84-day) hypertrophy program.
+The agent must maximize muscle gain while managing fatigue through daily control of training intensity, volume, and recovery.
+
+## Submission Summary
+
+- Real-world simulation (not a toy/game): hypertrophy training and recovery management.
+- OpenEnv spec implemented: typed models, reset/step/state, openenv.yaml.
+- Three task graders with explicit difficulty labels and score range [0.0, 1.0].
+- Reward shaping includes partial progress signals (muscle delta, fatigue penalty, recovery bonus).
+- Baseline evaluation and reproducibility controls included.
+- Docker + HF Spaces deployment path included.
 
 ## Quick Start
 
-```python
-from hypertrophy_env import HypertrophyAction, HypertrophyEnv
+```bash
+# 1) install dependencies
+uv sync
 
-try:
-    # Create environment from Docker image
-    env = HypertrophyEnv.from_docker_image("hypertrophy_env:latest")
+# 2) start the environment server
+uvicorn server.app:app --host 0.0.0.0 --port 8000
 
-    # Reset to day 0
-    result = env.reset()
-    print(f"Day 0: muscle={result.observation.muscle_size}, fatigue={result.observation.fatigue}")
-
-    # Train for 84 days
-    for day in range(1, 85):
-        result = env.step(HypertrophyAction(
-            intensity=7,
-            volume=6,
-            recovery_strategy=8,
-        ))
-        obs = result.observation
-        print(f"Day {obs.day}: muscle={obs.muscle_size:.1f} fatigue={obs.fatigue:.2f} reward={result.reward:.2f}")
-
-        if result.done:
-            print(f"Program complete! Final muscle: {obs.muscle_size:.1f}")
-            break
-
-finally:
-    env.close()
+# 3) run inference against the local server
+$env:ENV_BASE_URL="http://127.0.0.1:8000"
+$env:HYPERTROPHY_TASK="muscle_gain"
+uv run python inference.py
 ```
 
-## Building the Docker Image
+## Environment Specification
+
+### Action Space
+
+HypertrophyAction:
+- intensity: int in [1, 10]
+- volume: int in [1, 10]
+- recovery_strategy: int in [1, 10]
+
+### Observation Space
+
+HypertrophyObservation:
+- day: int in [0, 84]
+- muscle_size: float in [50.0, 100.0]
+- strength: float in [50.0, 100.0]
+- fatigue: float in [0.0, 1.0]
+- status_message: str
+- reward: float
+- done: bool
+- metadata: dict (includes week, effective_stimulus, avg_fatigue, overtrain_days, etc.)
+
+### Transition + Reward
+
+- effective_stimulus = intensity * volume * (1 - fatigue^2)
+- muscle growth and strength gains are bounded and depend on effective stimulus.
+- fatigue accumulates from training and is reduced by recovery.
+
+Reward shaping:
+- base reward: muscle_delta * 10.0
+- fatigue penalty: -20.0 * max(0, fatigue - 0.8)^2
+- recovery bonus: +1.0 when recovery_strategy >= 7 and fatigue < 0.3
+
+## Task Graders (Easy -> Medium -> Hard)
+
+| Difficulty | Task | Score Formula | Score Range |
+|------------|------|---------------|-------------|
+| easy | muscle_gain | (final_muscle - 50) / 50 | [0.0, 1.0] |
+| medium | fatigue_management | (1 - avg_fatigue) * muscle_score | [0.0, 1.0] |
+| hard | periodization | muscle_score * 0.6 + no_overtrain * 0.4 | [0.0, 1.0] |
+
+Select task with:
+
+```bash
+HYPERTROPHY_TASK=muscle_gain
+```
+
+## Reproducibility
+
+Inference controls:
+- REPRODUCIBLE_MODE=1 (default)
+- INFERENCE_SEED=42
+- TEMPERATURE=0.0
+
+Evaluation controls:
+- EVAL_SEED=42
+- EVAL_EPISODES configurable (recommend >= 10)
+
+No temporary containers by default:
+- inference.py and evaluate_agent.py require ENV_BASE_URL / ENV_HTTP_URL by default.
+- Set ALLOW_TEMP_CONTAINERS=1 only if you intentionally want Docker fallback.
+
+## Artifacts and Evidence
+
+Generated in artifacts/:
+- policy_summary.csv
+- trajectory_comparison.png
+- trajectory_*.json
+
+What each artifact shows:
+- policy_summary.csv: per-episode baseline/agent metrics with task + task_difficulty.
+- trajectory_comparison.png: baseline vs agent trajectory view (muscle and fatigue over time).
+- trajectory JSON files: full step-by-step action/observation/reward traces.
+
+### Snapshot from previous outputs (muscle_gain, n=10 each baseline)
+
+| Policy | Avg Score | Min | Max |
+|--------|-----------|-----|-----|
+| random | 0.9258 | 0.8456 | 1.0000 |
+| fixed_5_5_5 | 0.8400 | 0.8400 | 0.8400 |
+| heuristic | 1.0000 | 1.0000 | 1.0000 |
+
+These values are from artifacts/policy_summary.csv generated in this workspace.
+
+## Setup and Run
+
+### 1) Install Dependencies
+
+```bash
+uv sync
+```
+
+### 2) Run Server Locally
+
+```bash
+uvicorn server.app:app --host 0.0.0.0 --port 8000
+```
+
+### 3) Set Environment Variables
+
+Required:
+- HF_TOKEN
+- API_BASE_URL
+- MODEL_NAME
+
+Common runtime:
+- HYPERTROPHY_TASK
+- ENV_BASE_URL
+
+### 4) Run Inference
+
+```bash
+uv run python inference.py
+```
+
+Expected stdout format:
+- [START] ...
+- [STEP] ... (per step)
+- [END] success=<true|false> steps=<n> score=<0..1> rewards=...
+
+### 5) Run Baselines / Evaluation
+
+```bash
+EVAL_EPISODES=20 ENABLE_LLM_EVAL=0 uv run python evaluate_agent.py
+```
+
+## Docker
+
+### Build
 
 ```bash
 docker build -t hypertrophy_env:latest .
 ```
 
-## Environment Details
-
-### Action
-
-**HypertrophyAction** — the agent's daily training decision:
-- `intensity` (int, 1-10) — Training intensity (1=light, 10=max effort)
-- `volume` (int, 1-10) — Training volume (1=minimal sets, 10=maximum volume)
-- `recovery_strategy` (int, 1-10) — Recovery effort (1=poor, 10=optimal protocol)
-
-### Observation
-
-**HypertrophyObservation** — state after each training day:
-- `day` (int) — Current training day (0-84)
-- `muscle_size` (float) — Muscle size score (50.0-100.0)
-- `strength` (float) — Strength score (50.0-100.0)
-- `fatigue` (float) — Fatigue level (0.0=fresh, 1.0=overtrained)
-- `status_message` (str) — Human-readable status
-- `reward` (float) — Step reward (inherited from base)
-- `done` (bool) — Whether episode is complete (inherited from base)
-- `metadata` (dict) — Additional metrics (week, effective_stimulus, avg_fatigue, overtrain_days)
-
-### Reward
-
-The reward is shaped to encourage sustainable training:
-- **Base reward**: `muscle_delta × 10.0` — proportional to actual muscle gained
-- **Fatigue penalty**: `-20.0 × max(0, fatigue - 0.8)²` — quadratic penalty for overtraining
-- **Recovery bonus**: `+1.0` if recovery ≥ 7 and fatigue < 0.3
-
-### Physics
-
-- **Fatigue reduces effectiveness**: `effective_stimulus = intensity × volume × (1 - fatigue²)`
-- **Fatigue accumulation**: `fatigue += intensity × volume × 0.008`
-- **Fatigue recovery**: `fatigue -= recovery_strategy × 0.06`
-- **Muscle growth**: `muscle_size += effective_stimulus × 0.02` (clamped to 100)
-- **Strength growth**: `strength += effective_stimulus × 0.012` (clamped to 100)
-
-### Tasks (3 variants with explicit difficulty)
-
-| Difficulty | Task | Description | Score Formula |
-|------------|------|-------------|---------------|
-| Easy | `muscle_gain` | Maximize final muscle size | `(muscle - 50) / 50` |
-| Medium | `fatigue_management` | Grow muscle while keeping fatigue low | `(1 - avg_fatigue) × muscle_score` |
-| Hard | `periodization` | Achieve gains with minimal overtraining | `muscle×0.6 + no_overtrain×0.4` |
-
-Select task via: `HYPERTROPHY_TASK=muscle_gain`
-
-### Reproducibility Notes
-
-- **Baseline reproducibility (strong)**: `evaluate_agent.py` is seeded (`EVAL_SEED`, default `42`) and supports deterministic baseline policies.
-- **LLM reproducibility (best effort)**: external APIs can still vary slightly. For stronger reproducibility in `inference.py`, use:
-    - `REPRODUCIBLE_MODE=1` (default) to force deterministic decoding settings
-    - `INFERENCE_SEED=42` for local deterministic behavior
-    - `TEMPERATURE=0.0` for low-variance generation
-- For a fair comparison, keep model, task, and env vars fixed across repeated runs and report mean/std over multiple episodes.
-
-## Advanced Usage
-
-### Connecting to an Existing Server
-
-```python
-from hypertrophy_env import HypertrophyAction, HypertrophyEnv
-
-env = HypertrophyEnv(base_url="http://localhost:8000")
-result = env.reset()
-result = env.step(HypertrophyAction(intensity=5, volume=5, recovery_strategy=7))
-```
-
-### Using the Context Manager
-
-```python
-from hypertrophy_env import HypertrophyAction, HypertrophyEnv
-
-with HypertrophyEnv(base_url="http://localhost:8000") as env:
-    result = env.reset()
-    for day in range(1, 85):
-        result = env.step(HypertrophyAction(intensity=6, volume=5, recovery_strategy=8))
-        if result.done:
-            break
-```
-
-## Deploying to Hugging Face Spaces
+### Run
 
 ```bash
-openenv push
+docker run -p 8000:8000 hypertrophy_env:latest
 ```
 
-## Development & Testing
+## Hugging Face Spaces Deployment
 
-## Proving Agent Adaptation
+### Create Space
 
-This project does not fine-tune model weights during rollout.
-Adaptation happens through in-context learning: recent trajectory, reward, and fatigue history are fed back into each next-day prompt.
+- SDK: Docker
+- Hardware: CPU Basic
+- Visibility: Public (recommended for validator accessibility)
 
-### 1) Run Baseline vs Agent Evaluation
+### Deploy
 
 ```bash
-# Baselines only (random/fixed/heuristic)
-EVAL_EPISODES=20 ENABLE_LLM_EVAL=0 python evaluate_agent.py
-
-# Include LLM policy (requires API key/model access)
-EVAL_EPISODES=20 ENABLE_LLM_EVAL=1 python evaluate_agent.py
+openenv push --repo-id <username>/hypertrophy-env-openenv
 ```
 
-Artifacts generated in `artifacts/`:
-- `policy_summary.csv` - per-episode metrics for tables/charts
-- `trajectory_comparison.png` - dual-axis plot (muscle and fatigue) for baseline vs agent
-
-### 2) Capture LLM Reasoning Trace
-
-`inference.py` logs full day-by-day trajectory (state, action, reward, thought) to a JSON artifact file.
+### Post-Deploy Validation
 
 ```bash
-SAVE_TRAJECTORY=1 ARTIFACT_DIR=artifacts python inference.py
+# health must return 200
+curl https://<username>-hypertrophy-env-openenv.hf.space/health
+
+# reset must respond correctly
+curl -X POST https://<username>-hypertrophy-env-openenv.hf.space/reset
 ```
 
-This provides judge-friendly evidence that the policy reacts to fatigue penalties and recovery opportunities across the 84-day horizon.
+## Validator-Oriented Checklist
 
-### Direct Environment Testing
+- Docker image builds successfully.
+- /health returns 200.
+- /reset responds with valid initial observation.
+- inference.py runs end-to-end and prints valid START/STEP/END lines.
+- All three task variants return score in [0.0, 1.0].
+- Artifacts are produced for evidence (policy_summary.csv, trajectory_comparison.png, trajectory JSON).
 
-```bash
-python3 server/hypertrophy_env_environment.py
-```
+## Repository Structure
 
-### Running Locally
-
-```bash
-uvicorn server.app:app --reload
-```
-
-## Project Structure
-
-```
+```text
 hypertrophy_env/
-├── .dockerignore          # Docker build exclusions
-├── __init__.py            # Module exports
-├── README.md              # This file
-├── openenv.yaml           # OpenEnv manifest
-├── pyproject.toml         # Project metadata and dependencies
-├── uv.lock                # Locked dependencies (generated)
-├── client.py              # HypertrophyEnv client (WebSocket)
-├── models.py              # Action and Observation models
-├── inference.py           # LLM agent inference script
-├── implementation_plan.md # Implementation plan and checklist
-└── server/
-    ├── __init__.py        # Server module exports
-    ├── hypertrophy_env_environment.py  # Core MDP environment
-    └── app.py             # FastAPI application (HTTP + WebSocket)
+|- openenv.yaml
+|- models.py
+|- client.py
+|- inference.py
+|- evaluate_agent.py
+|- Dockerfile
+|- README.md
+|- artifacts/
+|  |- policy_summary.csv
+|  |- trajectory_comparison.png
+|  |- trajectory_*.json
+`- server/
+   |- app.py
+   `- hypertrophy_env_environment.py
 ```

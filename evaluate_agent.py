@@ -45,6 +45,7 @@ if load_dotenv is not None:
 IMAGE_NAME = os.getenv("IMAGE_NAME", "hypertrophy_env:latest")
 ENV_BASE_URL = os.getenv("ENV_BASE_URL") or os.getenv("ENV_HTTP_URL")
 API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
+ALLOW_TEMP_CONTAINERS = os.getenv("ALLOW_TEMP_CONTAINERS", "0") == "1"
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
 TASK_NAME = os.getenv("HYPERTROPHY_TASK", "muscle_gain")
@@ -173,7 +174,12 @@ async def llm_policy(obs, client: OpenAI) -> HypertrophyAction:
 async def create_env() -> HypertrophyEnv:
     if ENV_BASE_URL:
         return HypertrophyEnv(base_url=ENV_BASE_URL)
-    return await HypertrophyEnv.from_docker_image(IMAGE_NAME)
+    if ALLOW_TEMP_CONTAINERS:
+        return await HypertrophyEnv.from_docker_image(IMAGE_NAME)
+    raise ValueError(
+        "Temporary container startup is disabled. Set ENV_BASE_URL (or ENV_HTTP_URL) to an existing "
+        "environment server, or set ALLOW_TEMP_CONTAINERS=1 to enable Docker fallback."
+    )
 
 
 async def run_episode(policy_name: str, policy_fn: Callable, client: Optional[OpenAI] = None) -> EpisodeResult:
