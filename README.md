@@ -35,7 +35,7 @@ uv sync
 uvicorn server.app:app --host 0.0.0.0 --port 8000
 
 # 3) run inference against the local server
-$env:ENV_BASE_URL="http://127.0.0.1:8000"
+$env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
 $env:HYPERTROPHY_TASK="muscle_gain"
 uv run python inference.py
 ```
