@@ -32,11 +32,7 @@ The agent must maximize muscle gain while managing fatigue through daily control
 uv sync
 
 # 2) set inference environment variables
-$env:HF_TOKEN="<your_hf_token>"
-$env:API_BASE_URL="https://router.huggingface.co/v1"
-$env:MODEL_NAME="Qwen/Qwen2.5-72B-Instruct"
-$env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
-$env:HYPERTROPHY_TASK="muscle_gain"
+$env:HF_TOKEN="<your_hf_token>"  
 
 # 3) run inference
 uv run python inference.py
