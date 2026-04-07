@@ -31,9 +31,11 @@ The agent must maximize muscle gain while managing fatigue through daily control
 # 1) install dependencies
 uv sync
 
-# 2) run inference against the remote server
+# 2) set inference environment variables
+$env:HF_TOKEN="<your_hf_token>"
 $env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
-$env:HYPERTROPHY_TASK="muscle_gain"
+
+# 3) run inference 
 uv run python inference.py
 ```
 
@@ -218,7 +220,7 @@ docker run -p 8000:8000 hypertrophy_env:latest
 ### Deploy
 
 ```bash
-openenv push --repo-id novelcoder123/hypertrophy-env-openenv
+openenv push --repo-id novelcoder123/hypertrophy-env-openenv(Invoke-WebRequest -Method POST -Uri "https://novelcoder123-hypertrophy-env-openenv.hf.space/reset").StatusCode(Invoke-WebRequest -Method POST -Uri "https://novelcoder123-hypertrophy-env-openenv.hf.space/reset").StatusCode
 ```
 
 ### Post-Deploy Validation
