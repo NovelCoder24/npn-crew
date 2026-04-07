@@ -5,3 +5,22 @@ runtime: fastapi
 app: server.app:app
 port: 8000
 
+tasks:
+  - name: muscle_gain
+    difficulty: easy
+    description: Maximize final muscle size over 84 days.
+    score_range: [0.0, 1.0]
+    grader: "(final_muscle - 50) / 50"
+
+  - name: fatigue_management
+    difficulty: medium
+    description: Grow muscle while keeping average fatigue low.
+    score_range: [0.0, 1.0]
+    grader: "(1 - avg_fatigue) * muscle_score"
+
+  - name: periodization
+    difficulty: hard
+    description: Maximize muscle gains while minimizing overtraining days.
+    score_range: [0.0, 1.0]
+    grader: "muscle_score * 0.6 + no_overtrain_ratio * 0.4"
+
