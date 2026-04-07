@@ -27,7 +27,7 @@ The agent must maximize muscle gain while managing fatigue through daily control
 
 ## Quick Start
 
-```powershell
+```bash
 # 1) install dependencies
 uv sync
 
@@ -36,6 +36,19 @@ $env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
 $env:HYPERTROPHY_TASK="muscle_gain"
 uv run python inference.py
 ```
+
+## OpenEnv Manifest (openenv.yaml)
+
+`openenv.yaml` is the launch manifest used by OpenEnv tooling and validators.
+
+- `spec_version`: manifest schema version.
+- `name`: environment identifier.
+- `type`: deployment type (`space`).
+- `runtime`: app framework (`fastapi`).
+- `app`: entrypoint (`server.app:app`).
+- `port`: service port (`8000`).
+
+If you change app module path or port, update this file accordingly.
 
 ## Environment Specification
 
@@ -105,6 +118,9 @@ Generated in artifacts/:
 - trajectory_comparison.png
 - trajectory_*.json
 
+Commit policy_summary.csv and trajectory_comparison.png for judge verification.
+Trajectory JSON files are run-by-run debug traces and can remain git-ignored.
+
 What each artifact shows:
 - policy_summary.csv: per-episode baseline/agent metrics with task + task_difficulty.
 - trajectory_comparison.png: baseline vs agent trajectory view (muscle and fatigue over time).
@@ -119,6 +135,10 @@ What each artifact shows:
 | heuristic | 1.0000 | 1.0000 | 1.0000 |
 
 These values are from artifacts/policy_summary.csv generated in this workspace.
+
+Interpretation note:
+- Random policy can score relatively high on `muscle_gain` because this task rewards final size more than training quality details.
+- Use `fatigue_management` and `periodization` to stress robustness; these penalize poor recovery/overtraining and are harder to game.
 
 ## Setup and Run
 
@@ -137,9 +157,9 @@ uvicorn server.app:app --host 0.0.0.0 --port 8000
 ### 3) Set Environment Variables
 
 Required:
-- HF_TOKEN
-- API_BASE_URL
-- MODEL_NAME
+- HF_TOKEN (if provider requires auth)
+- API_BASE_URL (example: `https://router.huggingface.co/v1`)
+- MODEL_NAME (tested example: `Qwen/Qwen2.5-72B-Instruct`)
 
 Common runtime:
 - HYPERTROPHY_TASK
@@ -161,6 +181,15 @@ Expected stdout format:
 ```bash
 EVAL_EPISODES=20 ENABLE_LLM_EVAL=0 uv run python evaluate_agent.py
 ```
+
+`evaluate_agent.py` purpose:
+- Runs baseline policies (random/fixed/heuristic) and optional LLM policy.
+- Writes comparable metrics to `artifacts/policy_summary.csv`.
+- Generates trajectory visual comparison (`artifacts/trajectory_comparison.png`).
+
+How it differs from `inference.py`:
+- `inference.py`: single policy rollout with START/STEP/END logs for validator-style execution.
+- `evaluate_agent.py`: multi-episode benchmark runner for evidence and reproducibility.
 
 ## Docker
 
