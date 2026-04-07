@@ -69,13 +69,13 @@ if load_dotenv is not None:
 # ──────────────────────────────────────────────
 # Configuration
 # ──────────────────────────────────────────────
-IMAGE_NAME = os.getenv("IMAGE_NAME")
+IMAGE_NAME = os.getenv("IMAGE_NAME") 
 ENV_BASE_URL = os.getenv("ENV_BASE_URL") or os.getenv("ENV_HTTP_URL")
 API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
 ALLOW_TEMP_CONTAINERS = os.getenv("ALLOW_TEMP_CONTAINERS", "0") == "1"
 
-API_BASE_URL = os.getenv("API_BASE_URL")
-MODEL_NAME = os.getenv("MODEL_NAME")
+API_BASE_URL = os.getenv("API_BASE_URL") or "https://router.huggingface.co/v1"
+MODEL_NAME = os.getenv("MODEL_NAME") or "Qwen/Qwen2.5-72B-Instruct"
 
 # Task selection (hackathon requires 3+ tasks with graders)
 TASK_NAME = os.getenv("HYPERTROPHY_TASK", "muscle_gain")
