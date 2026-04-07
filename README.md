@@ -31,11 +31,15 @@ The agent must maximize muscle gain while managing fatigue through daily control
 # 1) install dependencies
 uv sync
 
-# 2) run inference against the remote server
-$env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
-$env:HYPERTROPHY_TASK="muscle_gain"
+# 2) set inference environment variables
+export HF_TOKEN="<your_hf_token>"
+export ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
+
+# 3) run inference
 uv run python inference.py
 ```
+
+> **Windows (PowerShell):** Replace `export KEY=value` with `$env:KEY="value"`.
 
 ## OpenEnv Manifest (openenv.yaml)
 
@@ -244,18 +248,20 @@ curl -X POST https://novelcoder123-hypertrophy-env-openenv.hf.space/reset
 
 ```text
 hypertrophy_env/
-|- openenv.yaml
-|- models.py
-|- client.py
-|- inference.py
-|- evaluate_agent.py
-|- Dockerfile
-|- README.md
+|- openenv.yaml             # OpenEnv manifest (spec_version, tasks, runtime, port)
+|- models.py                # Pydantic models: HypertrophyAction, HypertrophyObservation
+|- client.py                # HypertrophyEnv client (WebSocket-based EnvClient)
+|- inference.py             # REQUIRED: single-rollout validator script ([START]/[STEP]/[END])
+|- evaluate_agent.py        # Benchmark runner: baseline & LLM policies, CSV + plot output
+|- Dockerfile               # Multi-stage Docker build using openenv-base
+|- pyproject.toml           # Python package manifest with all dependencies
+|- README.md                # This file
 |- artifacts/
-|  |- policy_summary.csv
-|  |- trajectory_comparison.png
-|  |- trajectory_*.json
+|  |- policy_summary.csv    # Per-episode baseline/agent metrics (committed as evidence)
+|  |- trajectory_comparison.png  # Baseline vs agent trajectory plot (committed as evidence)
+|  `- trajectory_*.json     # Step-by-step debug traces (git-ignored, generated at runtime)
 `- server/
-   |- app.py
-   `- hypertrophy_env_environment.py
+   |- app.py                # FastAPI app using openenv create_app()
+   `- hypertrophy_env_environment.py  # MDP simulator (reset/step/state)
 ```
+

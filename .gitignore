@@ -50,3 +50,6 @@ hypertrophy_env.tar
 
 # Keep evidence artifacts tracked, ignore per-run trajectory dumps
 artifacts/trajectory_*.json
+
+# Test output files
+test_results.txt
