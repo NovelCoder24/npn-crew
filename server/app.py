@@ -27,41 +27,26 @@ Usage:
     # Or run directly:
     python -m server.app
 """
-
-import sys
-import os
-
-# Ensure the repo root is on sys.path so `models` and `server` are importable
-_repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _repo_root not in sys.path:
-    sys.path.insert(0, _repo_root)
-
-def _get_app():
+try:
     from openenv.core.env_server.http_server import create_app
-    try:
-        from models import HypertrophyAction, HypertrophyObservation
-        from server.hypertrophy_env_environment import HypertrophyEnvironment
-    except ImportError:
-        from ..models import HypertrophyAction, HypertrophyObservation
-        from .hypertrophy_env_environment import HypertrophyEnvironment
+except Exception as e:  # pragma: no cover
+    raise ImportError(
+        "openenv is required for the web interface. Install dependencies with '\n    uv sync\n'"
+    ) from e
 
+from models import HypertrophyAction, HypertrophyObservation
+from server.hypertrophy_env_environment import HypertrophyEnvironment
 
-    # Create the app with web interface and README integration
-    return create_app(
+# Create the app with web interface and README integration
+app = create_app(
         HypertrophyEnvironment,
         HypertrophyAction,
         HypertrophyObservation,
         env_name="hypertrophy_env",
         max_concurrent_envs=1,  # increase this number to allow more concurrent WebSocket sessions
-    )
+)
 
-try:
-    app = _get_app()
-except Exception as e:
-    print(f"Error creating app: {e}")
-    app = None
-
-def main(host: str = "0.0.0.0", port: int = 8000):
+def main():
     """
     Entry point for direct execution via uv run or python -m.
 
@@ -78,13 +63,14 @@ def main(host: str = "0.0.0.0", port: int = 8000):
     multiple workers:
         uvicorn hypertrophy_env.server.app:app --workers 4
     """
-    import uvicorn
-    uvicorn.run(app, host=host, port=port)
-
-
-if __name__ == '__main__':
     import argparse
+    import uvicorn
     parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
-    main(port=args.port)
+    uvicorn.run(app, host=args.host, port=args.port)
+
+
+if __name__ == "__main__":
+    main()
