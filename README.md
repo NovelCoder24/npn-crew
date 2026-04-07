@@ -27,12 +27,12 @@ The agent must maximize muscle gain while managing fatigue through daily control
 
 ## Quick Start
 
-```bash
+```powershell
 # 1) install dependencies
 uv sync
 
 # 2) run inference against the remote server
-$env:ENV_BASE_URL="[https://novelcoder123-hypertrophy-env-openenv.hf.space](https://novelcoder123-hypertrophy-env-openenv.hf.space)"
+$env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
 $env:HYPERTROPHY_TASK="muscle_gain"
 uv run python inference.py
 ```
