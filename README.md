@@ -183,8 +183,8 @@ Expected stdout format:
 
 ### 5) Run Baselines / Evaluation
 
-```bash
-EVAL_EPISODES=20 ENABLE_LLM_EVAL=0 uv run python evaluate_agent.py
+```powershell
+$env:EVAL_EPISODES="20"; $env:ENABLE_LLM_EVAL="0"; uv run python evaluate_agent.py
 ```
 
 `evaluate_agent.py` purpose:
