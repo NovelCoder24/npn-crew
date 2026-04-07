@@ -218,17 +218,17 @@ docker run -p 8000:8000 hypertrophy_env:latest
 ### Deploy
 
 ```bash
-openenv push --repo-id <username>/hypertrophy-env-openenv
+openenv push --repo-id novelcoder123/hypertrophy-env-openenv
 ```
 
 ### Post-Deploy Validation
 
 ```bash
 # health must return 200
-curl https://<username>-hypertrophy-env-openenv.hf.space/health
+curl https://novelcoder123-hypertrophy-env-openenv.hf.space/health
 
 # reset must respond correctly
-curl -X POST https://<username>-hypertrophy-env-openenv.hf.space/reset
+curl -X POST https://novelcoder123-hypertrophy-env-openenv.hf.space/reset
 ```
 
 ## Validator-Oriented Checklist
