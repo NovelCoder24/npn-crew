@@ -27,13 +27,18 @@ The agent must maximize muscle gain while managing fatigue through daily control
 
 ## Quick Start
 
-```bash
+```powershell
 # 1) install dependencies
 uv sync
 
-# 2) run inference against the remote server
+# 2) set inference environment variables
+$env:HF_TOKEN="<your_hf_token>"
+$env:API_BASE_URL="https://router.huggingface.co/v1"
+$env:MODEL_NAME="Qwen/Qwen2.5-72B-Instruct"
 $env:ENV_BASE_URL="https://novelcoder123-hypertrophy-env-openenv.hf.space"
 $env:HYPERTROPHY_TASK="muscle_gain"
+
+# 3) run inference
 uv run python inference.py
 ```
 
@@ -47,6 +52,8 @@ uv run python inference.py
 - `runtime`: app framework (`fastapi`).
 - `app`: entrypoint (`server.app:app`).
 - `port`: service port (`8000`).
+- `tasks`: explicit easy/medium/hard task declarations used by validators.
+- `graders`: grader entrypoints mapped to each task.
 
 If you change app module path or port, update this file accordingly.
 
@@ -159,7 +166,7 @@ uvicorn server.app:app --host 0.0.0.0 --port 8000
 ### 3) Set Environment Variables
 
 Required:
-- HF_TOKEN (if provider requires auth)
+- HF_TOKEN (required for the current `inference.py` LLM path)
 - API_BASE_URL (example: `https://router.huggingface.co/v1`)
 - MODEL_NAME (tested example: `Qwen/Qwen2.5-72B-Instruct`)
 
@@ -229,6 +236,13 @@ curl https://novelcoder123-hypertrophy-env-openenv.hf.space/health
 
 # reset must respond correctly
 curl -X POST https://novelcoder123-hypertrophy-env-openenv.hf.space/reset
+```
+
+PowerShell equivalent:
+
+```powershell
+(Invoke-WebRequest -Uri "https://novelcoder123-hypertrophy-env-openenv.hf.space/health").StatusCode
+(Invoke-WebRequest -Method POST -Uri "https://novelcoder123-hypertrophy-env-openenv.hf.space/reset").StatusCode
 ```
 
 ## Validator-Oriented Checklist

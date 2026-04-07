@@ -4,4 +4,36 @@ type: space
 runtime: fastapi
 app: server.app:app
 port: 8000
+graders:
+  - id: muscle_gain_grader
+    task: muscle_gain
+    entrypoint: task_graders:grade_easy
+  - id: fatigue_management_grader
+    task: fatigue_management
+    entrypoint: task_graders:grade_medium
+  - id: periodization_grader
+    task: periodization
+    entrypoint: task_graders:grade_hard
+tasks:
+  - id: muscle_gain
+    task_id: muscle_gain
+    difficulty: easy
+    description: Maximize final muscle size over the 84-day training horizon.
+    reward_range: [0.0, 1.0]
+    grader: task_graders:grade_easy
+    grader_id: muscle_gain_grader
+  - id: fatigue_management
+    task_id: fatigue_management
+    difficulty: medium
+    description: Grow muscle while controlling average fatigue.
+    reward_range: [0.0, 1.0]
+    grader: task_graders:grade_medium
+    grader_id: fatigue_management_grader
+  - id: periodization
+    task_id: periodization
+    difficulty: hard
+    description: Maximize gains while minimizing overtraining days.
+    reward_range: [0.0, 1.0]
+    grader: task_graders:grade_hard
+    grader_id: periodization_grader
 
