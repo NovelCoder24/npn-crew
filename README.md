@@ -126,6 +126,8 @@ What each artifact shows:
 - trajectory_comparison.png: baseline vs agent trajectory view (muscle and fatigue over time).
 - trajectory JSON files: full step-by-step action/observation/reward traces.
 
+![Trajectory comparison: muscle and fatigue over time](artifacts/trajectory_comparison.png)
+
 ### Snapshot from previous outputs (muscle_gain, n=10 each baseline)
 
 | Policy | Avg Score | Min | Max |
