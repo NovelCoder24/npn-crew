@@ -37,17 +37,16 @@ if _repo_root not in sys.path:
     sys.path.insert(0, _repo_root)
 
 def _get_app():
-    """
-    Factory function to create the FastAPI app.
-
-    This is separated from the global scope to allow for better testing
-    and potential future extensions (e.g., dependency injection).
-    """
     from openenv.core.env_server.http_server import create_app
+    try:
+        from models import HypertrophyAction, HypertrophyObservation
+        from server.hypertrophy_env_environment import HypertrophyEnvironment
+    except ImportError:
+        from ..models import HypertrophyAction, HypertrophyObservation
+        from .hypertrophy_env_environment import HypertrophyEnvironment
 
-    from ..models import HypertrophyAction, HypertrophyObservation
-    from .hypertrophy_env_environment import HypertrophyEnvironment
 
+    # Create the app with web interface and README integration
     return create_app(
         HypertrophyEnvironment,
         HypertrophyAction,
@@ -79,5 +78,9 @@ def main(host: str = "0.0.0.0", port: int = 8000):
     uvicorn.run(app, host=host, port=port)
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=8000)
+    args = parser.parse_args()
+    main(port=args.port)
