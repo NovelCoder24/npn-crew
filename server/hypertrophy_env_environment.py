@@ -31,10 +31,7 @@ from uuid import uuid4
 from openenv.core.env_server.interfaces import Environment
 from openenv.core.env_server.types import State
 
-try:
-    from ..models import HypertrophyAction, HypertrophyObservation
-except ImportError:
-    from models import HypertrophyAction, HypertrophyObservation
+from models import HypertrophyAction, HypertrophyObservation
 
 MAX_DAYS = 84
 
