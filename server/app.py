@@ -38,8 +38,8 @@ if _repo_root not in sys.path:
 
 from openenv.core.env_server.http_server import create_app
 
-from models import HypertrophyAction, HypertrophyObservation
-from server.hypertrophy_env_environment import HypertrophyEnvironment
+from ..models import HypertrophyAction, HypertrophyObservation
+from .hypertrophy_env_environment import HypertrophyEnvironment
 
 
 # Create the app with web interface and README integration
