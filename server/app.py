@@ -27,42 +27,37 @@ Usage:
     # Or run directly:
     python -m server.app
 """
-try:
-    from openenv.core.env_server.http_server import create_app
-except Exception as e:  # pragma: no cover
-    raise ImportError(
-        "openenv is required for the web interface. Install dependencies with '\n    uv sync\n'"
-    ) from e
 
-from models import HypertrophyAction, HypertrophyObservation
-from server.hypertrophy_env_environment import HypertrophyEnvironment
+import sys
+import os
+
+# Ensure the repo root is on sys.path so `models` and `server` are importable
+_repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _repo_root not in sys.path:
+    sys.path.insert(0, _repo_root)
+
+from openenv.core.env_server.http_server import create_app
+
+# Support both package-relative and absolute imports
+try:
+    from ..models import HypertrophyAction, HypertrophyObservation
+    from .hypertrophy_env_environment import HypertrophyEnvironment
+except ImportError:
+    from models import HypertrophyAction, HypertrophyObservation
+    from server.hypertrophy_env_environment import HypertrophyEnvironment
+
 
 # Create the app with web interface and README integration
 app = create_app(
-        HypertrophyEnvironment,
-        HypertrophyAction,
-        HypertrophyObservation,
-        env_name="hypertrophy_env",
-        max_concurrent_envs=1,  # increase this number to allow more concurrent WebSocket sessions
+    HypertrophyEnvironment,
+    HypertrophyAction,
+    HypertrophyObservation,
+    env_name="hypertrophy_env",
+    max_concurrent_envs=1,
 )
 
+
 def main():
-    """
-    Entry point for direct execution via uv run or python -m.
-
-    This function enables running the server without Docker:
-        uv run --project . server
-        uv run --project . server --port 8001
-        python -m hypertrophy_env.server.app
-
-    Args:
-        host: Host address to bind to (default: "0.0.0.0")
-        port: Port number to listen on (default: 8000)
-
-    For production deployments, consider using uvicorn directly with
-    multiple workers:
-        uvicorn hypertrophy_env.server.app:app --workers 4
-    """
     import argparse
     import uvicorn
     parser = argparse.ArgumentParser()
