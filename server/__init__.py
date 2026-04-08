@@ -6,6 +6,6 @@
 
 """Hypertrophy Env environment server components."""
 
-from .hypertrophy_env_environment import HypertrophyEnvironment
+from server.hypertrophy_env_environment import HypertrophyEnvironment
 
 __all__ = ["HypertrophyEnvironment"]

@@ -10,7 +10,7 @@ Data models for the Hypertrophy Environment.
 A 12-week (84-day) hypertrophy simulator where an AI agent learns to
 maximize muscle growth by balancing training intensity/volume with
 recovery while managing fatigue.
-"""
+""" 
 
 from openenv.core.env_server.types import Action, Observation
 from pydantic import Field
