@@ -61,13 +61,7 @@ try:
 except Exception as e:  # pragma: no cover
     # Keep module importable so brittle validators can still detect `main`.
     APP_INIT_ERROR = e
-    from fastapi import FastAPI
-
-    app = FastAPI(title="Hypertrophy Env Server")
-
-    @app.get("/health")
-    def health() -> dict:
-        return {"status": "degraded", "error": str(APP_INIT_ERROR)}
+    app = None
 
 
 def main():
@@ -87,5 +81,5 @@ def main():
     uvicorn.run(app, host=args.host, port=args.port)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
