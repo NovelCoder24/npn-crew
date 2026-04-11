@@ -58,10 +58,10 @@ except ImportError:
     load_dotenv = None
 
 try:
+    from hypertrophy_env import HypertrophyAction, HypertrophyEnv
+except ModuleNotFoundError:
     from client import HypertrophyEnv
     from models import HypertrophyAction
-except ModuleNotFoundError:
-    from hypertrophy_env import HypertrophyAction, HypertrophyEnv
 
 if load_dotenv is not None:
     load_dotenv()
@@ -70,9 +70,7 @@ if load_dotenv is not None:
 # Configuration
 # ──────────────────────────────────────────────
 IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
-ENV_BASE_URL = os.getenv("ENV_BASE_URL") or os.getenv(
-    "ENV_HTTP_URL", "https://novelcoder123-hypertrophy-env-openenv.hf.space"
-)
+ENV_BASE_URL = os.getenv("ENV_BASE_URL" , "https://novelcoder123-hypertrophy-env-openenv.hf.space")
 API_KEY = os.getenv("HF_TOKEN")
 ALLOW_TEMP_CONTAINERS = os.getenv("ALLOW_TEMP_CONTAINERS", "0") == "1"
 

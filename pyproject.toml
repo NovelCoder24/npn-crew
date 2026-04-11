@@ -18,6 +18,8 @@ dependencies = [
     # install from github
     # "openenv-core[core] @ git+https://github.com/meta-pytorch/OpenEnv.git",
     "openenv-core[core]>=0.2.2",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
     # Environment-specific dependencies
     # Add all dependencies needed for your environment here
     # Examples:
@@ -37,12 +39,10 @@ dev = [
 
 [project.scripts]
 # Server entry point - enables running via: uv run --project . server
-# or: python -m server.app
-server = "server.app:main"
+# or: python -m hypertrophy_env.server.app
+server = "hypertrophy_env.server.app:main"
 
 [tool.setuptools]
 include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["server*"]
+packages = ["hypertrophy_env", "hypertrophy_env.server"]
+package-dir = { "hypertrophy_env" = ".", "hypertrophy_env.server" = "server" }
