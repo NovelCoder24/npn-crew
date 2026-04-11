@@ -6,9 +6,12 @@
 
 """Hypertrophy Env environment server components."""
 
-try:
-    from server.hypertrophy_env_environment import HypertrophyEnvironment
+__all__ = ["HypertrophyEnvironment"]
 
-    __all__ = ["HypertrophyEnvironment"]
-except ImportError:
-    __all__ = []
+
+def __getattr__(name):
+    """Lazy import to avoid circular/failing imports during validator checks."""
+    if name == "HypertrophyEnvironment":
+        from server.hypertrophy_env_environment import HypertrophyEnvironment
+        return HypertrophyEnvironment
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

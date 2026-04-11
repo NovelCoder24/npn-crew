@@ -1,16 +1,22 @@
-from fastapi import FastAPI
-import uvicorn
-from fastapi import HTTPException
+from fastapi import FastAPI, HTTPException
 from threading import Lock
 from typing import Any, Dict
 
-from models import HypertrophyAction, HypertrophyObservation
-from server.hypertrophy_env_environment import HypertrophyEnvironment
+import uvicorn
 
 
 app = FastAPI()
-_env = HypertrophyEnvironment()
+_env = None
 _env_lock = Lock()
+
+
+def _get_env():
+    """Lazy-initialize the environment to avoid import failures at module load time."""
+    global _env
+    if _env is None:
+        from server.hypertrophy_env_environment import HypertrophyEnvironment
+        _env = HypertrophyEnvironment()
+    return _env
 
 
 def _model_to_dict(model: Any) -> Dict[str, Any]:
@@ -21,7 +27,7 @@ def _model_to_dict(model: Any) -> Dict[str, Any]:
     return dict(model)
 
 
-def _step_payload(obs: HypertrophyObservation) -> Dict[str, Any]:
+def _step_payload(obs) -> Dict[str, Any]:
     return {
         "observation": _model_to_dict(obs),
         "reward": float(getattr(obs, "reward", 0.0)),
@@ -32,18 +38,22 @@ def _step_payload(obs: HypertrophyObservation) -> Dict[str, Any]:
 @app.post("/reset")
 def reset():
     try:
+        env = _get_env()
         with _env_lock:
-            obs = _env.reset()
+            obs = env.reset()
             return _step_payload(obs)
     except Exception as exc:  # pragma: no cover
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @app.post("/step")
-def step(action: HypertrophyAction):
+def step(action: Dict[str, Any]):
     try:
+        from models import HypertrophyAction
+        parsed_action = HypertrophyAction(**action)
+        env = _get_env()
         with _env_lock:
-            obs = _env.step(action)
+            obs = env.step(parsed_action)
             return _step_payload(obs)
     except Exception as exc:  # pragma: no cover
         raise HTTPException(status_code=500, detail=str(exc)) from exc
@@ -52,8 +62,9 @@ def step(action: HypertrophyAction):
 @app.get("/state")
 def state():
     try:
+        env = _get_env()
         with _env_lock:
-            st = _env.state
+            st = env.state
             return {
                 "episode_id": st.episode_id,
                 "step_count": st.step_count,
@@ -64,6 +75,7 @@ def state():
 
 @app.get("/schema")
 def schema() -> Dict[str, Any]:
+    from models import HypertrophyAction, HypertrophyObservation
     action_schema = (
         HypertrophyAction.model_json_schema()
         if hasattr(HypertrophyAction, "model_json_schema")
