@@ -44,5 +44,6 @@ server = "server.app:main"
 
 [tool.setuptools]
 include-package-data = true
+py-modules = ["client", "models", "task_graders"]
 packages = ["server"]
 package-dir = {"" = "."}

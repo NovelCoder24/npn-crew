@@ -1,25 +1,11 @@
-"""FastAPI application entrypoint for the Hypertrophy environment."""
-
-import os
-import sys
-from threading import Lock
-from typing import Any, Dict
-
 from fastapi import FastAPI
 import uvicorn
 from fastapi import HTTPException
+from threading import Lock
+from typing import Any, Dict
 
-# Keep direct execution/import robust across validator run modes.
-_repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _repo_root not in sys.path:
-    sys.path.insert(0, _repo_root)
-
-try:
-    from ..models import HypertrophyAction, HypertrophyObservation
-    from .hypertrophy_env_environment import HypertrophyEnvironment
-except ImportError:
-    from models import HypertrophyAction, HypertrophyObservation
-    from server.hypertrophy_env_environment import HypertrophyEnvironment
+from models import HypertrophyAction, HypertrophyObservation
+from server.hypertrophy_env_environment import HypertrophyEnvironment
 
 
 app = FastAPI()
