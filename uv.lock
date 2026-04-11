@@ -2031,8 +2031,10 @@ name = "openenv-hypertrophy-env"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "fastapi" },
     { name = "matplotlib" },
     { name = "openenv-core", extra = ["core"] },
+    { name = "uvicorn" },
 ]
 
 [package.optional-dependencies]
@@ -2043,10 +2045,12 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "fastapi", specifier = ">=0.115.0" },
     { name = "matplotlib", specifier = ">=3.8.0" },
     { name = "openenv-core", extras = ["core"], specifier = ">=0.2.2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0.0" },
+    { name = "uvicorn", specifier = ">=0.30.0" },
 ]
 provides-extras = ["dev"]
 
